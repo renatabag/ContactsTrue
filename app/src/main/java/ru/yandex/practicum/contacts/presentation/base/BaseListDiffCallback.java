@@ -1,27 +1,25 @@
 package ru.yandex.practicum.contacts.presentation.base;
 
-import androidx.recyclerview.widget.AsyncDifferConfig;
-import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListUpdateCallback;
 
-class BaseListDiffCallback<T extends ListDiffInterface<T>> extends DiffUtil.ItemCallback<T> {
+import org.jetbrains.annotations.Nullable;
 
-    private final AsyncListDiffer<T> differ = new AsyncListDiffer<>(
-            (ListUpdateCallback) this,
-            new AsyncDifferConfig.Builder<>(new BaseListDiffCallback<T>()).build()
-    );
+public class BaseListDiffCallback<T extends ListDiffInterface<T>> extends DiffUtil.ItemCallback<T> {
 
-    public boolean areItemsTheSame(T oldItem, T newItem) {
+    @Override
+    public boolean areItemsTheSame(@NonNull T oldItem, @NonNull T newItem) {
         return oldItem.theSameAs(newItem);
     }
 
-    public boolean areContentsTheSame(T oldItem, T newItem) {
+    @Override
+    public boolean areContentsTheSame(@NonNull T oldItem, @NonNull T newItem) {
         return oldItem.equals(newItem);
     }
 
-    public Object getChangePayload(T oldItem, T newItem) {
+    @Nullable
+    @Override
+    public Object getChangePayload(@NonNull T oldItem, @NonNull T newItem) {
         return newItem;
     }
-
 }
